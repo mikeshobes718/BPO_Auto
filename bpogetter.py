@@ -5,6 +5,7 @@ import datetime
 
 # Your email credentials
 EMAIL = 'careersglobal@unitedinvestmentsfirm.com'
+EMAIL = 'bpos@unitedinvestmentsfirm.com'
 PASSWORD = 'Bpos2020'
 IMAP_SERVER = 'mail.unitedinvestmentsfirm.com'
 
