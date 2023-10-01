@@ -1,29 +1,43 @@
 import imaplib
 import email
 import re
-import datetime  # <-- Added this import
+import datetime
 
 # Your email credentials
 EMAIL = 'careersglobal@unitedinvestmentsfirm.com'
-# EMAIL = 'bpo@unitedinvestmentsfirm.com'
 PASSWORD = 'Bpos2020'
 IMAP_SERVER = 'mail.unitedinvestmentsfirm.com'
 
 # Connect to your mailbox using IMAP
-mail = imaplib.IMAP4_SSL(IMAP_SERVER)
-mail.login(EMAIL, PASSWORD)
-mail.select('inbox')
+try:
+    mail = imaplib.IMAP4_SSL(IMAP_SERVER)
+    mail.login(EMAIL, PASSWORD)
+    mail.select('inbox')
+except ConnectionRefusedError:
+    print("Error: Unable to connect to the IMAP server. Please check the server address and port.")
+    exit(1)
 
 # Search for emails from the past 2 days, including today
 two_days_ago = (datetime.datetime.now() - datetime.timedelta(days=2)).strftime('%d-%b-%Y')
-status, email_ids = mail.search(None, '(SINCE "' + two_days_ago + '")')  # <-- Updated this line
+status, email_ids = mail.search(None, '(SINCE "' + two_days_ago + '")')
+
+# Debug print: Print the status and number of email IDs retrieved
+print(f"Search status: {status}")
+print(f"Number of emails retrieved: {len(email_ids[0].split())}")
+
+# Check if there are no emails from the past 2 days
+if not email_ids or not email_ids[0]:
+    print("No emails found from the past 2 days.")
+    exit(0)
 
 # Keywords and regex patterns to search for
 keywords = ["bpo", "fee", "Bid", "assignment"]
 fee_bid_pattern = re.compile(r'(fee|bid):\s*\$\s*(\d+(\.\d{2})?)', re.IGNORECASE)
 
-# Iterate through all emails
-for e_id in email_ids:
+# Iterate through all emails and add a debug print for each email processed
+for e_id in email_ids[0].split():
+    print(f"Processing email ID: {e_id.decode('utf-8')}")
+    
     status, email_data = mail.fetch(e_id, '(RFC822)')
     raw_email = email_data[0][1]
 
