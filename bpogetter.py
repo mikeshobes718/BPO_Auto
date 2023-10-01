@@ -1,10 +1,11 @@
 import imaplib
 import email
 import re
+import datetime  # <-- Added this import
 
 # Your email credentials
 EMAIL = 'careersglobal@unitedinvestmentsfirm.com'
-# EMAIL = 'bpo@unitedinvestmentsfirm.com'
+EMAIL = 'bpo@unitedinvestmentsfirm.com'
 PASSWORD = 'Bpos2020'
 IMAP_SERVER = 'mail.unitedinvestmentsfirm.com'
 
@@ -13,9 +14,9 @@ mail = imaplib.IMAP4_SSL(IMAP_SERVER)
 mail.login(EMAIL, PASSWORD)
 mail.select('inbox')
 
-# Search for all emails
-status, email_ids = mail.search(None, 'ALL')
-email_ids = email_ids[0].split()
+# Search for emails from the past 2 days, including today
+two_days_ago = (datetime.datetime.now() - datetime.timedelta(days=2)).strftime('%d-%b-%Y')
+status, email_ids = mail.search(None, '(SINCE "' + two_days_ago + '")')  # <-- Updated this line
 
 # Keywords and regex patterns to search for
 keywords = ["bpo", "fee", "Bid", "assignment"]
