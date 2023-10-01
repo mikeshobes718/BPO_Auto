@@ -5,7 +5,7 @@ import datetime  # <-- Added this import
 
 # Your email credentials
 EMAIL = 'careersglobal@unitedinvestmentsfirm.com'
-EMAIL = 'bpo@unitedinvestmentsfirm.com'
+# EMAIL = 'bpo@unitedinvestmentsfirm.com'
 PASSWORD = 'Bpos2020'
 IMAP_SERVER = 'mail.unitedinvestmentsfirm.com'
 
