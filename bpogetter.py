@@ -5,6 +5,7 @@ import datetime
 
 # Your email credentials
 EMAIL = 'careersglobal@unitedinvestmentsfirm.com'
+EMAIL = 'bpo@unitedinvestmentsfirm.com'
 EMAIL = 'bpos@unitedinvestmentsfirm.com'
 PASSWORD = 'Bpos2020'
 IMAP_SERVER = 'mail.unitedinvestmentsfirm.com'
@@ -14,12 +15,18 @@ try:
     mail = imaplib.IMAP4_SSL(IMAP_SERVER)
     mail.login(EMAIL, PASSWORD)
     mail.select('inbox')
+except imaplib.IMAP4.error as e:
+    if "AUTHENTICATIONFAILED" in str(e):
+        print("Authentication failed. Please check your email and password.")
+    else:
+        print(f"An IMAP error occurred: {e}")
+    exit(1)
 except ConnectionRefusedError:
     print("Error: Unable to connect to the IMAP server. Please check the server address and port.")
     exit(1)
 
 # Search for emails from the past 2 days, including today
-two_days_ago = (datetime.datetime.now() - datetime.timedelta(days=2)).strftime('%d-%b-%Y')
+two_days_ago = (datetime.datetime.now() - datetime.timedelta(days=365)).strftime('%d-%b-%Y')
 status, email_ids = mail.search(None, '(SINCE "' + two_days_ago + '")')
 
 # Debug print: Print the status and number of email IDs retrieved
