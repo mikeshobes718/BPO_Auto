@@ -59,6 +59,7 @@ def main():
     finally:
         # Uncomment the line below if you want to close the browser automatically after entering the verification code
         # driver.quit()
+        pass
 
 if __name__ == "__main__":
     main()
