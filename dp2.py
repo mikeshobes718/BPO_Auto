@@ -2,6 +2,10 @@ import mysql.connector
 from sshtunnel import SSHTunnelForwarder
 
 ssh_host = 'ssh.example.com'
+<<<<<<< HEAD
+=======
+ssh sftp_live_gWGwD@35.184.185.194 -p 55206
+>>>>>>> 0980bf6 (Description of your changes)
 ssh_username = 'ssh_username'
 ssh_password = 'ssh_password'
 remote_bind_address = ('127.0.0.1', 3306)

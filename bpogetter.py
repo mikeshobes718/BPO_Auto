@@ -4,8 +4,12 @@ from bs4 import BeautifulSoup
 <<<<<<< HEAD
 =======
 from collections import defaultdict
+<<<<<<< HEAD
 from datetime import datetime, timedelta
 >>>>>>> 015fd82 (Renamed bpo1.py to bpogetter.py)
+=======
+import webbrowser
+>>>>>>> 0980bf6 (Description of your changes)
 
 # Email credentials
 EMAIL = 'bpo@unitedinvestmentsfirm.com'
@@ -21,11 +25,14 @@ def connect_to_email():
     # Dictionary to store the count for each sender
     sender_count = defaultdict(int)
     
+<<<<<<< HEAD
     # Calculate the date 3 days ago
     three_days_ago = datetime.now() - timedelta(days=3)
     date_str = three_days_ago.strftime('%d-%b-%Y')
     
 >>>>>>> 015fd82 (Renamed bpo1.py to bpogetter.py)
+=======
+>>>>>>> 0980bf6 (Description of your changes)
     try:
         # Login to the mailbox
         mail.login(EMAIL, PASSWORD)
@@ -35,6 +42,7 @@ def connect_to_email():
         mail.select('inbox')
         
 <<<<<<< HEAD
+<<<<<<< HEAD
         # Search for emails from voxtur with "New Assignment" in the subject
         status, email_ids = mail.search(None, '(FROM "voxtur")', '(SUBJECT "New Assignment")')
 =======
@@ -42,6 +50,10 @@ def connect_to_email():
         search_criteria = f'(OR (OR (SUBJECT "bid") (SUBJECT "request")) (SUBJECT "assignment")) SINCE {date_str}'
         status, email_ids = mail.search(None, search_criteria)
 >>>>>>> 015fd82 (Renamed bpo1.py to bpogetter.py)
+=======
+        # Search for emails with specified subjects
+        status, email_ids = mail.search(None, '(OR (OR (SUBJECT "bid") (SUBJECT "request")) (SUBJECT "assignment"))')
+>>>>>>> 0980bf6 (Description of your changes)
         
         for e_id in email_ids[0].split():
             status, email_data = mail.fetch(e_id, '(RFC822)')
@@ -51,8 +63,20 @@ def connect_to_email():
             msg = email.message_from_bytes(raw_email)
             
 <<<<<<< HEAD
+<<<<<<< HEAD
             # Extract the email body
 =======
+=======
+            sender = msg['from']
+            subject = msg['subject']
+            
+            # Check if the sender contains "voxtur" and open the link
+            print(sender)
+            if "voxtur" in sender.lower():
+                webbrowser.open("https://vendor.voxturappraisal.com")
+                print(f"Opened link for email from {sender} with subject: {subject}")
+            
+>>>>>>> 0980bf6 (Description of your changes)
             # Extract and print the email body
 >>>>>>> 015fd82 (Renamed bpo1.py to bpogetter.py)
             email_body = ""
@@ -64,6 +88,7 @@ def connect_to_email():
             else:
                 email_body = msg.get_payload(decode=True).decode('utf-8', errors='ignore')
             
+<<<<<<< HEAD
 <<<<<<< HEAD
             # Use BeautifulSoup to parse the HTML content
             soup = BeautifulSoup(email_body, 'html.parser')
@@ -87,10 +112,12 @@ def connect_to_email():
         
 =======
             sender = msg['from']
+=======
+>>>>>>> 0980bf6 (Description of your changes)
             sender_count[sender] += 1
             
             print(f"From: {sender}")
-            print(f"Subject: {msg['subject']}")
+            print(f"Subject: {subject}")
             # print("Email Body:")
             # print(email_body)
             print("-----------\n")
